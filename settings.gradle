@@ -1,0 +1,3 @@
+include ':videotool'
+include ':app'
+rootProject.name = "VideoToolsExamples"
