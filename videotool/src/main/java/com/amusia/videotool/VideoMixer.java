@@ -20,26 +20,26 @@ import java.util.concurrent.Executors;
  */
 public class VideoMixer implements Runnable {
 
-    public String TAG = "VideoMixer";
+    private static final String TAG = "VideoMixer";
 
     private final int MSG_SUCCESSFUL = 0;
 
     private final int MSG_FAILED = 1;
 
-    MediaExtractor mMediaExtractor;
-    MediaMuxer mMediaMuxer;
+    private MediaExtractor mMediaExtractor;
+    private MediaMuxer mMediaMuxer;
     private VideoCallback mVideoCallback;
 
     private boolean isMixing = false;
     private String mOutput;
     private String[] mInputs;
 
-    int mVideoTrackIndex;
-    int mAudioTrackIndex;
-    long mVideoDuration = 0;
+    private int mVideoTrackIndex;
+    private int mAudioTrackIndex;
+    private long mVideoDuration = 0;
 
-    ExecutorService mExecutorService;
-    Handler UIHandler;
+    private ExecutorService mExecutorService;
+    private Handler UIHandler;
 
     public VideoMixer() {
         mExecutorService = Executors.newSingleThreadScheduledExecutor();
@@ -63,6 +63,12 @@ public class VideoMixer implements Runnable {
         });
     }
 
+    /**
+     *
+     * @param output 输出文件
+     * @param paths 输入文件数组
+     * @return
+     */
     public VideoMixer setPath(String output, String... paths) {
 
         this.mOutput = output;
@@ -93,7 +99,7 @@ public class VideoMixer implements Runnable {
 
     }
 
-    public void remixVideo() {
+    private void remixVideo() {
         try {
             mMediaMuxer = new MediaMuxer(mOutput, MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4);
             MediaCodec.BufferInfo bufferInfo = new MediaCodec.BufferInfo();
@@ -174,5 +180,4 @@ public class VideoMixer implements Runnable {
     public void run() {
         remixVideo();
     }
-
 }

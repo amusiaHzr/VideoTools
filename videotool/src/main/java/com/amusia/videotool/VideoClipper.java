@@ -40,8 +40,8 @@ public class VideoClipper implements Runnable {
     private long mStartTime;
     private long mEndTime;
 
-    ExecutorService mExecutorService;
-    Handler UIHandler;
+    private ExecutorService mExecutorService;
+    private  Handler UIHandler;
 
     public VideoClipper() {
         mExecutorService = Executors.newSingleThreadScheduledExecutor();
@@ -65,6 +65,14 @@ public class VideoClipper implements Runnable {
         });
     }
 
+    /**
+     *
+     * @param input 输入MP4
+     * @param output 输出MP4
+     * @param startTime 开始时间 单位秒
+     * @param endTime 结束时间 单位秒
+     * @return
+     */
     public VideoClipper setPathAndDuration(String input, String output, int startTime, int endTime) {
         this.mInput = input;
         this.mOutput = output;
@@ -94,7 +102,7 @@ public class VideoClipper implements Runnable {
     }
 
 
-    public void clip() {
+    private void clip() {
         Log.d(TAG, "clip: input = "+mInput);
         Log.d(TAG, "clip: output = "+mOutput);
         Log.d(TAG, "clip: startTime = "+mStartTime);
